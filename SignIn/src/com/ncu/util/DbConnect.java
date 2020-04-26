@@ -16,12 +16,12 @@ public class DbConnect {
 	private static String password;	
     static{
         try {
-           //用流读入properties配置文件
+           
             InputStream inputStream = DbConnect.class.getClassLoader().getResourceAsStream("/mysql.properties");
             Properties properties = new Properties();
-          // 从输入字节流读取属性列表（键和元素对）
+         
             properties.load(inputStream);
-            //用此属性列表中指定的键搜索属性，获取驱动，url，username，password
+          
             driverName = properties.getProperty("DRIVER");
             url = properties.getProperty("URL");
             userName = properties.getProperty("USERNAME");
@@ -33,7 +33,7 @@ public class DbConnect {
             e.printStackTrace();
         }
     }
-//    获取数据库连接
+
     public static Connection getDBconnection() {
         Connection conn=null;
         try {
