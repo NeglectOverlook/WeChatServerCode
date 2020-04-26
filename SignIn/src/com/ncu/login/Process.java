@@ -41,14 +41,14 @@ public class Process extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//设置请求编码
+
         request.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");
-        /* 设置响应头允许ajax跨域访问 */
+     
         response.setHeader("Access-Control-Allow-Origin", "*");
-        /* 星号表示所有的异域请求都可以接受， */
+      
         response.setHeader("Access-Control-Allow-Methods", "GET,POST");
-        System.out.println("可以访问2");
+       
         String flag=request.getParameter("flag");
         if("addc".equals(flag)) {
         	String userid=request.getParameter("userid");
@@ -57,10 +57,8 @@ public class Process extends HttpServlet {
             Course course2=new Course(userid, course, sclass, new Date());
             TeacherDAO teacherDAO=new TeacherDAO();
             try {
-    			int a=teacherDAO.AddCourse(course2);
-    			if(a!=0) {
-    				System.out.println("添加课程成功");
-    			}
+    			teacherDAO.AddCourse(course2);
+    		
     		} catch (Exception e) {
     			e.printStackTrace();
     		}
@@ -131,10 +129,8 @@ public class Process extends HttpServlet {
                      out.flush();
             	 }
             	 else {
-					int a=stu.addCourse(sclass);
-					if(a!=0) {
-						System.out.println("学生添加课程成功");
-					}
+					stu.addCourse(sclass);
+				
 				}
     			
     		} catch (Exception e) {
@@ -162,14 +158,12 @@ public class Process extends HttpServlet {
         	String savekey=request.getParameter("signKey");
         	String latitude=request.getParameter("weidu");
         	String longitude=request.getParameter("jingdu");
-        	System.out.println("id:"+id+"key:"+savekey+"纬度："+latitude+"经度："+longitude);
+        
         	CheckKey key=new CheckKey(id, savekey, 1, new Date(),latitude,longitude);
         	TeacherDAO teacher=new TeacherDAO();
         	try {
-				int a=teacher.saveSign(key);
-				if(a!=0) {
-					System.out.println("存储老师签到成功");
-				}
+				teacher.saveSign(key);
+			
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -183,7 +177,7 @@ public class Process extends HttpServlet {
         	String tlongitude=request.getParameter("jingdu");
         	double slatitude=Double.parseDouble(tlatitude);
         	double slongitude=Double.parseDouble(tlongitude);
-        	//System.out.println("存储学生："+"纬度："+slatitude+"经度："+slongitude);
+  
         	Sign sign=new Sign(courseid, userid, new Date());
         	StudentDAO studentDAO=new StudentDAO();
         	try {
@@ -215,8 +209,8 @@ public class Process extends HttpServlet {
         	int courseid=Integer.parseInt(id);
         	TeacherDAO teacherDAO =new TeacherDAO();
         	try {
-				int a=teacherDAO.stopSign(courseid);
-			//	System.out.println("更新条数："+a);
+			teacherDAO.stopSign(courseid);
+	
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -226,8 +220,8 @@ public class Process extends HttpServlet {
         	int courseid=Integer.parseInt(idString);
         	TeacherDAO teacherDAO =new TeacherDAO();
         	try {
-				int a=teacherDAO.DeleteCourse(courseid);
-			//	System.out.println("删除条数："+a);
+				teacherDAO.DeleteCourse(courseid);
+		
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -266,10 +260,8 @@ public class Process extends HttpServlet {
         	FeedBack feedBack=new FeedBack(openid, suggestCon, new Date());
         	StudentDAO studentDAO=new StudentDAO();
         	try {
-				int a=studentDAO.suggestBack(feedBack);
-				if(a!=0) {
-					System.out.println("插入成功");
-				}
+				studentDAO.suggestBack(feedBack);
+			
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
