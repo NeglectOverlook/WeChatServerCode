@@ -22,7 +22,7 @@ public class TeacherDAO implements ITeacherDAO {
 	protected static String FINDCHECK_SQL="select * from teacher where openID=?";
 
 	@Override
-	public int create(Teacher tea) throws Exception { //老师注册
+	public int create(Teacher tea) throws Exception { 
 		Connection con=null;
 	      PreparedStatement prepStmt=null;
 	      ResultSet rs=null;
@@ -39,17 +39,17 @@ public class TeacherDAO implements ITeacherDAO {
 	          addNum=prepStmt.executeUpdate();
 	          System.out.println(addNum);
 	      } catch(Exception e){
-	    	  System.out.println("老师注册抛出异常");
+	   
 	       e.printStackTrace();
 	      } finally{
-	    	  System.out.println("老师注册关闭连接2");
+	    	  
 	    	  DbConnect.closeDB(con, prepStmt, rs);
 	      }
 		return addNum;
 	}
 
 	@Override
-	public boolean findCheck(String userid) throws Exception {//身份判断
+	public boolean findCheck(String userid) throws Exception {
 		Connection con=null;
 	      PreparedStatement prepStmt=null;
 	      ResultSet rs=null;
@@ -65,14 +65,14 @@ public class TeacherDAO implements ITeacherDAO {
 	      } catch(Exception e){
 	       e.printStackTrace();
 	      } finally{
-	    	  System.out.println("关闭连接12");
+	    	 
 	    	  DbConnect.closeDB(con, prepStmt, rs);
 	      }
 		return res;
 	}
 
 	@Override
-	public int AddCourse(Course course) throws Exception {  //老师添加课程
+	public int AddCourse(Course course) throws Exception {
 		Connection con=null;
 	      PreparedStatement prepStmt=null;
 	      ResultSet rs=null;
@@ -89,17 +89,17 @@ public class TeacherDAO implements ITeacherDAO {
 	          addNum=prepStmt.executeUpdate();
 	          System.out.println(addNum);
 	      } catch(Exception e){
-	    	  System.out.println("抛出异常3");
+	  
 	       e.printStackTrace();
 	      } finally{
-	    	  System.out.println("关闭连接3");
+	    
 	    	  DbConnect.closeDB(con, prepStmt, rs);
 	      }
 		return addNum;
 	}
 
 	@Override
-	public List<Course> getmyCourse(String userid) throws Exception {  //查询老师的课程
+	public List<Course> getmyCourse(String userid) throws Exception { 
 		String sql="select courseID,openID,courseName,ofClass,buildTime from course where openID=?";
 		Connection con=null;
 		PreparedStatement prepStmt=null;
@@ -124,18 +124,18 @@ public class TeacherDAO implements ITeacherDAO {
 			e.printStackTrace();
 		}finally {			
 			DbConnect.closeDB(con, prepStmt, rs);
-			System.out.println("关闭了查询老师我的课程连接");
+		
 		}		
 		return all;
 	}
 
 	@Override
-	public int judgeSign(int id) throws Exception {//该函数用于点击课程进行考勤时，判断该课程是否上次考勤结束，如果结束开始新的考勤，如果没有结束进入上次考勤。
+	public int judgeSign(int id) throws Exception {
 		String sql="select state from mycheck where courseID=? order by checkTime desc limit 1";
 		Connection con=null;
 		PreparedStatement prepStmt=null;
 		ResultSet rs=null;
-		int judge=-1; //该课程还没有签到
+		int judge=-1;
 		try {
 			con=DbConnect.getDBconnection();
 			prepStmt=con.prepareStatement(sql);
@@ -149,7 +149,7 @@ public class TeacherDAO implements ITeacherDAO {
 			e.printStackTrace();
 		}finally {			
 			DbConnect.closeDB(con, prepStmt, rs);
-			System.out.println("关闭了查询签到判断连接");
+			
 		}
 		return judge;
 	}
@@ -173,14 +173,12 @@ public class TeacherDAO implements ITeacherDAO {
 	    	  prepStmt.setString(5, check.getLatitude());
 	    	  prepStmt.setString(6, check.getLongitude());
 	          addNum=prepStmt.executeUpdate();
-	          if(addNum!=0) {
-	        	  System.out.println("插入成功");
-	          }
+	   
 	      } catch(Exception e){
-	    	  System.out.println("抛出异常");
+	    	  
 	       e.printStackTrace();
 	      } finally{
-	    	  System.out.println("关闭存储老师签到连接");
+	    	  
 	    	  DbConnect.closeDB(con, prepStmt, rs);
 	      }
 		return addNum;
@@ -198,14 +196,12 @@ public class TeacherDAO implements ITeacherDAO {
 	    	  prepStmt =con.prepareStatement(sql);	    	  
 	    	  prepStmt.setInt(1,courseid);
 	          addNum=prepStmt.executeUpdate();
-	          if(addNum!=0) {
-	        	  System.out.println("更新成功"+addNum);
-	          }
+	        
 	      } catch(Exception e){
-	    	  System.out.println("抛出异常");
+	    	  
 	       e.printStackTrace();
 	      } finally{
-	    	  System.out.println("关闭停止签到连接");
+	    	 
 	    	  DbConnect.closeDB(con, prepStmt, rs);
 	      }
 		return addNum;
@@ -226,9 +222,7 @@ public class TeacherDAO implements ITeacherDAO {
 	    	  prepStmt =con.prepareStatement(sql1);	    	  
 	    	  prepStmt.setInt(1,courseid);
 	          addNum=prepStmt.executeUpdate();
-	          if(addNum!=0) {
-	        	  System.out.println("更新成功"+addNum);
-	          }
+	     
 	          prepStmt =con.prepareStatement(sql2);	    	  
 	    	  prepStmt.setInt(1,courseid);
 	          addNum=prepStmt.executeUpdate();
@@ -239,10 +233,10 @@ public class TeacherDAO implements ITeacherDAO {
 	    	  prepStmt.setInt(1,courseid);
 	          addNum=prepStmt.executeUpdate();
 	      } catch(Exception e){
-	    	  System.out.println("抛出异常");
+	    	
 	       e.printStackTrace();
 	      } finally{
-	    	  System.out.println("关闭删除连接");
+	    	 
 	    	  DbConnect.closeDB(con, prepStmt, rs);
 	      }
 		return addNum;
@@ -275,7 +269,7 @@ public class TeacherDAO implements ITeacherDAO {
 			e.printStackTrace();
 		}finally {			
 			DbConnect.closeDB(con, prepStmt, rs);
-			System.out.println("关闭了查询历史考勤连接");
+			
 		}
 		return all;
 	}
@@ -306,7 +300,7 @@ public class TeacherDAO implements ITeacherDAO {
 			e.printStackTrace();
 		}finally {			
 			DbConnect.closeDB(con, prepStmt, rs);
-			System.out.println("关闭了查询历史考勤2连接");
+			
 		}
 		return all;
 	}
