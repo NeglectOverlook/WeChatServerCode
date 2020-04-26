@@ -42,40 +42,21 @@ public class Login extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//设置请求编码
+		
         request.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");
-        /* 设置响应头允许ajax跨域访问 */
+     
         response.setHeader("Access-Control-Allow-Origin", "*");
-        /* 星号表示所有的异域请求都可以接受， */
+      
         response.setHeader("Access-Control-Allow-Methods", "GET,POST");
         String flag=request.getParameter("flag");
-     //   System.out.println(flag);
+
         if("login".equals(flag)) {
         	String code=request.getParameter("js_code");
         	String url = "https://api.weixin.qq.com/sns/jscode2session?appid="+APPID+
    				 "&secret="+SECRET+"&js_code="+ code +"&grant_type=authorization_code";
         	JSONObject sjson=CommonUtil.httpsRequest(url, "GET", null);
-        	/*String openid="";
-        	String session_key="";
-        	if (sjson != null) {
-				try {
-					 openid = sjson.getString("openid");
-					 session_key=sjson.getString("session_key");
-				} catch (Exception e) {
-					System.out.println("业务操作失败");
-					e.printStackTrace();
-				}
-			} else {
-				System.out.println("code无效");
-			}
-        	System.out.println(session_key+"  "+openid);*/
-        	
-        	/*Map<String, Object> result = new HashMap<String, Object>();
-            result.put("res", "test");
-            result.put("msg", "后台已收到");*/
-         //   String json = new Gson().toJson(sjson);
-           // System.out.println(json);
+        
         	Writer out=response.getWriter();
         	out.write(sjson.toString());
         	out.flush();
@@ -91,9 +72,9 @@ public class Login extends HttpServlet {
     		}
             Map<String, Object> result = new HashMap<String, Object>();
             result.put("res", res);
-            result.put("msg", "后台已收到");
+           
             String json = new Gson().toJson(result);
-            //返回值给微信小程序
+
             Writer out = response.getWriter();
             out.write(json);
             out.flush();
@@ -105,10 +86,8 @@ public class Login extends HttpServlet {
         	String studentNum=request.getParameter("snum");
         	Student student=new Student(userid, studentName, studentNum,new Date());
         	try {
-				int a=studentDAO.create(student);
-				if(a!=0) {
-					System.out.println("插入成功");
-				}
+				studentDAO.create(student);
+			
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -120,10 +99,8 @@ public class Login extends HttpServlet {
         	String teacherID=request.getParameter("tnum");
         	Teacher tea=new Teacher(userid, teacherID, teacherName,new Date());
         	try {
-				int a=teacherDAO.create(tea);
-				if(a!=0) {
-					System.out.println("插入成功");
-				}
+				teacherDAO.create(tea);
+			
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -157,7 +134,7 @@ public class Login extends HttpServlet {
 				}
 			}
             String json = new Gson().toJson(state);
-            //返回值给微信小程序
+      
             Writer out = response.getWriter();
             out.write(json);
             out.flush();
@@ -171,7 +148,7 @@ public class Login extends HttpServlet {
 	            result.put("backName",list.get(0));
 	            result.put("backNum", list.get(1));
 	            String json = new Gson().toJson(result);
-	            //返回值给微信小程序
+	        
 	            Writer out = response.getWriter();
 	            out.write(json);
 	            out.flush();
