@@ -22,7 +22,7 @@ public class StudentDAO implements IStudentDAO {
 	protected static String FINDCHECK_SQL="select * from student where openID=?";
 
 	@Override
-	public int create(Student stu) throws Exception { //Ñ§Éú×¢²á
+	public int create(Student stu) throws Exception { 
 		  Connection con=null;
 	      PreparedStatement prepStmt=null;
 	      ResultSet rs=null;
@@ -39,17 +39,17 @@ public class StudentDAO implements IStudentDAO {
 	          addNum=prepStmt.executeUpdate();
 	          System.out.println(addNum);
 	      } catch(Exception e){
-	    	  System.out.println("Ñ§Éú×¢²áÅ×³öÒì³£");
+	    	  
 	       e.printStackTrace();
 	      } finally{
-	    	  System.out.println("¹Ø±Õ×¢²áÑ§ÉúÁ¬½Ó");
+	    	
 	    	  DbConnect.closeDB(con, prepStmt, rs);
 	      }
 		return addNum;
 	}
 
 	@Override
-	public boolean findCheck(String userid) throws Exception {//Éí·İÅĞ¶Ï
+	public boolean findCheck(String userid) throws Exception {
 		Connection con=null;
 	      PreparedStatement prepStmt=null;
 	      ResultSet rs=null;
@@ -65,14 +65,14 @@ public class StudentDAO implements IStudentDAO {
 	      } catch(Exception e){
 	       e.printStackTrace();
 	      } finally{
-	    	  System.out.println("¹Ø±ÕÁ¬½Ó1");
+	    	  
 	    	  DbConnect.closeDB(con, prepStmt, rs);
 	      }
 		return res;
 	}
 
 	@Override
-	public List<Course> getAllCourse() throws Exception {//ËùÓĞ¿Î³Ì
+	public List<Course> getAllCourse() throws Exception {
 		String sql="select courseID,openID,courseName,ofClass,buildTime from course order by buildTime desc";
 		Connection con=null;
 		PreparedStatement prepStmt=null;
@@ -96,13 +96,13 @@ public class StudentDAO implements IStudentDAO {
 			e.printStackTrace();
 		}finally {			
 			DbConnect.closeDB(con, prepStmt, rs);
-			System.out.println("¹Ø±ÕÁË²éÑ¯ËùÓĞ¿Î³ÌÁ¬½Ó");
+		
 		}		
 		return all;
 	}
 
 	@Override
-	public List<Course> getmyCourse(String userid) throws Exception {//Ñ§ÉúµÄ¿Î³Ì
+	public List<Course> getmyCourse(String userid) throws Exception {
 		String sql="select a.courseID,b.openID,courseName,ofClass,addTime from course a,addcourse b where a.courseID=b.courseID and b.openID=?";
 		Connection con=null;
 		PreparedStatement prepStmt=null;
@@ -127,13 +127,13 @@ public class StudentDAO implements IStudentDAO {
 			e.printStackTrace();
 		}finally {			
 			DbConnect.closeDB(con, prepStmt, rs);
-			System.out.println("¹Ø±ÕÁËÑ§Éú²éÑ¯ÎÒµÄ¿Î³ÌÁ¬½Ó");
+	
 		}		
 		return all;
 	}
 
 	@Override
-	public int addCourse(AddCourse course) throws Exception {//Ñ§ÉúÌí¼Ó¿Î³Ì
+	public int addCourse(AddCourse course) throws Exception {
 		String sql="insert into addcourse(openID,courseID,addTime) values (?,?,?)";
 		Connection con=null;
 	      PreparedStatement prepStmt=null;
@@ -150,17 +150,17 @@ public class StudentDAO implements IStudentDAO {
 	          addNum=prepStmt.executeUpdate();
 	          System.out.println(addNum);
 	      } catch(Exception e){
-	    	  System.out.println("Å×³öÒì³£3");
+	    	
 	       e.printStackTrace();
 	      } finally{
-	    	  System.out.println("¹Ø±ÕÑ§ÉúÌí¼Ó¿Î³ÌÁ¬½Ó");
+	    
 	    	  DbConnect.closeDB(con, prepStmt, rs);
 	      }
 		return addNum;
 	}
 
 	@Override
-	public boolean addCourseCheck(AddCourse course) throws Exception {//Ñ§ÉúÌí¼Ó¿Î³ÌÊ±£¬ÅĞ¶ÏÊÇ·ñÒÑ¾­Ìí¼Ó¹ıÁË
+	public boolean addCourseCheck(AddCourse course) throws Exception {
 		String sql="select * from addcourse where openID=? and courseID=?";
 		Connection con=null;
 	      PreparedStatement prepStmt=null;
@@ -178,14 +178,14 @@ public class StudentDAO implements IStudentDAO {
 	      } catch(Exception e){
 	       e.printStackTrace();
 	      } finally{
-	    	  System.out.println("¹Ø±Õ²éÑ¯ÊÇ·ñ¿Î³ÌÒÑ¾­Ìí¼Ó");
+	    
 	    	  DbConnect.closeDB(con, prepStmt, rs);
 	      }
 		return res;
 	}
     
 	@Override
-	public int saveSign(Sign sign) throws Exception { //´æ´¢Ñ§ÉúµÄÇ©µ½
+	public int saveSign(Sign sign) throws Exception { 
 		String sql="insert into sign (checkID,courseID,openID,signTime) values (?,?,?,?)";
 		  Connection con=null;
 	      PreparedStatement prepStmt=null;
@@ -204,7 +204,7 @@ public class StudentDAO implements IStudentDAO {
 	      } catch(Exception e){
 	       e.printStackTrace();
 	      } finally{
-	    	  System.out.println("¹Ø±Õ´æ´¢Ñ§ÉúÇ©µ½Á¬½Ó");
+	    	
 	    	  DbConnect.closeDB(con, prepStmt, rs);
 	      }
 		return addNum;
@@ -229,7 +229,7 @@ public class StudentDAO implements IStudentDAO {
 	        			 if(  ifSign(sign.getCheckID(), sign.getOpenID()) ){
 	        				 reString="done";
 	        			 }else {
-	        				 System.out.println("Êı¾İ¿â¾­Î³¶È:"+Double.parseDouble(rs.getString(7))+"    "+Double.parseDouble(rs.getString(6)));
+	        				 
 	        				 if ( ifNear(jing, wei,Double.parseDouble(rs.getString(7)),Double.parseDouble(rs.getString(6))) ) {
 	        					 saveSign(sign);
 			        			 reString="sus";
@@ -249,10 +249,10 @@ public class StudentDAO implements IStudentDAO {
 	        	 }
 	          }
 	      } catch(Exception e){
-	    	  System.out.println("Êı¾İ¿âÅ×³öÒì³£");
+	    	
 	       e.printStackTrace();
 	      } finally{
-	    	  System.out.println("¹Ø±Õ¼ì²éÑ§ÉúÇ©µ½Á¬½Ó");
+	    	  
 	    	  DbConnect.closeDB(con, prepStmt, rs);
 	      }
 		return reString;
@@ -279,7 +279,7 @@ public class StudentDAO implements IStudentDAO {
 	      } catch(Exception e){
 	       e.printStackTrace();
 	      } finally{
-	    	  System.out.println("¹Ø±Õ¿¼ÇÚÒ³Ãæ»ñÈ¡Ñ§ÉúÁ¬½Ó£¡£¡");
+	    	
 	    	  DbConnect.closeDB(con, prepStmt, rs);
 	      }
 	      try{
@@ -298,7 +298,7 @@ public class StudentDAO implements IStudentDAO {
 	      } catch(Exception e){
 	       e.printStackTrace();
 	      } finally{
-	    	  System.out.println("¹Ø±Õ¿¼ÇÚÒ³Ãæ»ñÈ¡Ñ§ÉúÁ¬½Ó2");
+	  
 	    	  DbConnect.closeDB(con, prepStmt, rs);
 	      }
 		return array;
@@ -323,25 +323,25 @@ public class StudentDAO implements IStudentDAO {
 	      } catch(Exception e){
 	       e.printStackTrace();
 	      } finally{
-	    	  System.out.println("¹Ø±Õ²éÑ¯ÊÇ·ñÒÑ¾­Ç©µ½");
+	    	
 	    	  DbConnect.closeDB(con, prepStmt, rs);
 	      }
 		return res;
 	}
 	
 	/**
-	 * ¼ÆËãµØÇòÉÏÈÎÒâÁ½µã(¾­Î³¶È)¾àÀë      *       
-	 ** @param long1	** µÚÒ»µã¾­¶È     
-	 ** @param lat1 	** µÚÒ»µãÎ³¶È      
-	 ** @param long2    ** µÚ¶şµã¾­¶È      
-	 ** @param lat2     ** µÚ¶şµãÎ³¶È     
-	 ** @return ·µ»Ø¾àÀë µ¥Î»£ºÃ×
+	 * è®¡ç®—åœ°çƒä¸Šä»»æ„ä¸¤ç‚¹(ç»çº¬åº¦)è·ç¦»      *       
+	 ** @param long1	** ç¬¬ä¸€ç‚¹ç»åº¦     
+	 ** @param lat1 	** ç¬¬ä¸€ç‚¹çº¬åº¦      
+	 ** @param long2    ** ç¬¬äºŒç‚¹ç»åº¦      
+	 ** @param lat2     ** ç¬¬äºŒç‚¹çº¬åº¦     
+	 ** @return è¿”å›è·ç¦» å•ä½ï¼šç±³
 	 */
 	@Override
 	public boolean ifNear(double long1, double lat1, double long2, double lat2) throws Exception {
 		double a, b, R;
 	    boolean dis=true;
-	    R = 6378137; // µØÇò°ë¾¶         
+	    R = 6378137; // åœ°çƒåŠå¾„         
 	    lat1 = lat1 * Math.PI / 180.0;
 	    lat2 = lat2 * Math.PI / 180.0;
 	    a = lat1 - lat2;
@@ -374,10 +374,10 @@ public class StudentDAO implements IStudentDAO {
 	    	  prepStmt.setString(3,nowtime);
 	          addNum=prepStmt.executeUpdate();
 	      } catch(Exception e){
-	    	  System.out.println("Å×³öÒì³£");
+	    
 	       e.printStackTrace();
 	      } finally{
-	    	  System.out.println("¹Ø±ÕÁ¬½Ó2");
+	
 	    	  DbConnect.closeDB(con, prepStmt, rs);
 	      }
 		return addNum;
@@ -402,7 +402,7 @@ public class StudentDAO implements IStudentDAO {
 	      } catch(Exception e){
 	       e.printStackTrace();
 	      } finally{
-	    	  System.out.println("¹Ø±Õ²éÑ¯ÎÒµÄĞÅÏ¢");
+	    
 	    	  DbConnect.closeDB(con, prepStmt, rs);
 	      }
 		return res;
